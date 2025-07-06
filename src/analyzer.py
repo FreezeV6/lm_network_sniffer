@@ -1,13 +1,11 @@
 from ip_lookup import get_ip_info
 from process_mapper import map_connection_to_process
-from utils import log_alert
+from utils.utils import log_alert
+from utils.config import SUSPICIOUS_PORTS, SUSPICIOUS_DOMAINS
 from scapy.layers.inet import IP, TCP
 
-SUSPICIOUS_PORTS = {3333, 4444, 5555, 14444, 1688}
-SUSPICIOUS_DOMAINS = ["mine", "pool", "hashvault", "nicehash"]
-
-
 def analyze_packet(pkt):
+    # print(pkt.summary())
     if IP in pkt and TCP in pkt:
         dst_ip = pkt[IP].dst
         dst_port = pkt[TCP].dport
